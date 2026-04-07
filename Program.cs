@@ -142,33 +142,20 @@ namespace mail
         static double requestRamp(double target, double current)
         {
             double rampRate = 0.08; // change per loop (tune this!)
-
-            if (! (current > 0.05))
+            if (current < target)
             {
-
-                if (target > 0.2 || target < -0.2)
-                {
-                    if (current < target)
-                    {
-                        current += rampRate;
-                        if (current > target)
-                            current = target;
-                    }
-                    else if (current > target)
-                    {
-                        current -= rampRate;
-                        if (current < target)
-                            current = target;
-                    }
-
-                    return current;
-
-                }
-
-                else return 0.2;
+                current += rampRate;
+                if (current > target)
+                    current = target;
+            }
+            else if (current > target)
+            {
+                current -= rampRate;
+                if (current < target)
+                    current = target;
             }
 
-            else return target;
+            return current;
         }
 
         
